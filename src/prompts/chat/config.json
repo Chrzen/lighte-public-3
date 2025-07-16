@@ -1,0 +1,53 @@
+{
+    "schema": 1.1,
+    "description": "Chat with Teams RAG and Eurolux tools.",
+    "type": "completion",
+    "completion": {
+        "completion_type": "chat",
+        "include_history": true,
+        "include_input": true,
+        "max_input_tokens": 2800,
+        "max_tokens": 1000,
+        "temperature": 0.2,
+        "top_p": 0.9,
+        "presence_penalty": 0.0,
+        "frequency_penalty": 0.0
+    },
+    "augmentation": {
+        "augmentation_type": "sequence",
+        "data_sources": {
+            "eurolux-products": 800
+        }
+    },
+    "actions": [
+        {
+            "name": "getProductBySku",
+            "description": "Get product details including price and stock for a specific SKU",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "sku": {
+                        "type": "string",
+                        "description": "The product SKU to look up"
+                    }
+                },
+                "required": ["sku"]
+            }
+        },
+        {
+            "name": "searchProducts",
+            "description": "Search for products using filters",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "sku": {"type": "string", "description": "Product SKU"},
+                    "description": {"type": "string", "description": "Product description"},
+                    "minPrice": {"type": "number", "description": "Minimum price"},
+                    "maxPrice": {"type": "number", "description": "Maximum price"},
+                    "inStock": {"type": "boolean", "description": "Filter for in-stock products"},
+                    "limit": {"type": "number", "description": "Max results", "default": 10}
+                }
+            }
+        }
+    ]
+}
